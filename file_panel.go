@@ -32,7 +32,7 @@ func (f *FilePanel) SetFiles(files []os.FileInfo) {
 	f.files = files
 }
 
-// SelectedFile ファイルの選択
+// SelectedFile 選択しているファイル
 func (f *FilePanel) SelectedFile() os.FileInfo {
 	row, _ := f.GetSelection()
 	if row > len(f.files)-1 || row < 0 {
@@ -44,7 +44,9 @@ func (f *FilePanel) SelectedFile() os.FileInfo {
 // Keybinding ファイルパネルのキーバインドを設定
 func (f *FilePanel) Keybinding(g *GUI) {
 	f.SetSelectionChangedFunc(func(row, col int) {
-		// TODO
+		if file := f.SelectedFile(); file != nil {
+			g.PreviewPanel.UpdateView(file.Name())
+		}
 	})
 }
 
